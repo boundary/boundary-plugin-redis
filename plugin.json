@@ -1,8 +1,15 @@
 {
+  "name" : "Boundary Redis Plugin",
+  "version" : "0.9.0",
+  "meterVersionRequired" : "4.2.0-611",
+  "os" : [ "Linux", "Windows", "SmartOS", "OS X" ], 
+  "tags" : "redis", 
   "description": "Displays important REDIS metrics",
   "icon": "icon.png",
   "command": "node index.js",
   "postExtract": "npm install",
+  "command_lua" : "boundary-meter init.lua",
+  "postExtract_lua" : "",
   "ignore": "node_modules",
   "metrics": [
     "REDIS_COMMANDS_PROCESSED",
