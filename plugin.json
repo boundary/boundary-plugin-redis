@@ -45,6 +45,14 @@
       "name": "password",
       "description": "Password to the redis server.",
       "type": "password"
+    },
+    {
+      "title": "Poll Interval",
+      "name": "pollInterval",
+      "description": "How often should the plugin poll for metrics",
+      "type" : "integer",
+      "default" : 2000,
+      "required" : false 
     }
   ]
 }
