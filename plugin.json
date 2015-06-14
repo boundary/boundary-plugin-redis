@@ -2,7 +2,7 @@
   "name" : "Boundary Redis Plugin",
   "version" : "0.9.0",
   "meterVersionRequired" : "4.2.0-611",
-  "os" : [ "Linux", "Windows", "SmartOS", "OS X" ], 
+  "os" : [ "Linux" ], 
   "tags" : "redis", 
   "description": "Displays important REDIS metrics",
   "icon": "icon.png",

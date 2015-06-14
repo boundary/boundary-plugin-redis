@@ -7,7 +7,7 @@ Collects metrics from an instance of a Redis database.
 
 |     OS    | Linux | Windows | SmartOS | OS X |
 |:----------|:-----:|:-------:|:-------:|:----:|
-| Supported |   v   |    v    |    v    |  v   |
+| Supported |   v   |         |         |      |
 
 
 |  Runtime | node.js | Python | Java |
