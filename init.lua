@@ -20,6 +20,7 @@ local Accumulator = framework.Accumulator
 local DataSource = framework.DataSource
 local gsplit = framework.string.gsplit
 local split = framework.string.split
+local isEmpty = framework.string.isEmpty
 
 local params = framework.params
 params.port = params.port or 6379
@@ -34,7 +35,7 @@ function RedisDataSource:initialize(params)
   self.password = params.password
   local client = redis:new(self.host, self.port)
   client:propagate('error', self)
-  if self.password then
+  if not isEmpty(self.password) then
     client:auth(self.password)  
   end
   self.client = client 
