@@ -1,5 +1,4 @@
-Boundary Redis Plugin
----------------------
+# Boundary Redis Plugin
 
 Collects metrics from an instance of a Redis database.
 
@@ -9,10 +8,16 @@ Collects metrics from an instance of a Redis database.
 |:----------|:-----:|:-------:|:-------:|:----:|
 | Supported |   v   |         |         |      |
 
+#### For Boundary Meter v4.2
+
+- To install new meter go to Settings->Installation or [see instructons](https://help.boundary.com/hc/en-us/sections/200634331-Installation).
+- To upgrade the meter to the latest version - [see instructons](https://help.boundary.com/hc/en-us/articles/201573102-Upgrading-the-Boundary-Meter). 
+
+#### For Boundary Meter earlier than v4.2
 
 |  Runtime | node.js | Python | Java |
 |:---------|:-------:|:------:|:----:|
-| Required |    +    |        |      |
+| Required |    v    |        |      |
 
 - [How to install node.js?](https://help.boundary.com/hc/articles/202360701)
 
@@ -20,23 +25,33 @@ Collects metrics from an instance of a Redis database.
 
 None
 
-#### Plugin Configuration Fields
+### Plugin Configuration Fields
 
-|Field Name|Description                                          |
-|:-------|:------------------------------------------------------|
-|Source  |The source to display in the legend for the REDIS data.|
-|Port    |The redis port.                                        |
-|Host    |The redis hostname.                                    |
-|Password|Password to the redis server.                          |
+|Field Name  |Description                                            |
+|:-----------|:------------------------------------------------------|
+|Source      |The source to display in the legend for the REDIS data.|
+|Port        |The redis port.                                        |
+|Host        |The redis hostname.                                    |
+|Password    |Password to the redis server.                          |
+|PollInterval|Interval to query the redis server.                    |
 
 ### Metrics Collected
+
 |Metric Name               |Description|
-|:-------------------------|:|
-|Redis Connected Clients   ||
-|Redis Key Hits            ||
-|Redis Key Misses          ||
-|Redis Keys Expired        ||
-|Redis Key Evictions       ||
-|Redis Connections Received||
-|Redis Commands Processed  ||
-|Redis Used Memory         ||
+|:-------------------------|:----------|
+|Redis Connected Clients   |           |
+|Redis Key Hits            |           |
+|Redis Key Misses          |           |
+|Redis Keys Expired        |           |
+|Redis Key Evictions       |           |
+|Redis Connections Received|           |
+|Redis Commands Processed  |           |
+|Redis Used Memory         |           |
+
+### Dashboards
+
+- Redis
+
+### References
+
+None
