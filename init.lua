@@ -12,12 +12,11 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 
-local redis = require('luvit-redis.lua')
 local framework = require('framework')
 local uv_native = require('uv_native')
 local Plugin = framework.Plugin
 local Accumulator = framework.Accumulator
-local DataSource = framework.DataSource
+local NetDataSource = framework.NetDataSource
 local gsplit = framework.string.gsplit
 local split = framework.string.split
 local isEmpty = framework.string.isEmpty
@@ -27,29 +26,6 @@ params.port = params.port or 6379
 params.host = params.host or 'localhost'
 
 local acc = Accumulator:new()
-
-local RedisDataSource = DataSource:extend()
-function RedisDataSource:initialize(params)
-  self.host = params.host
-  self.port = params.port
-  self.password = params.password
-  local client = redis:new(self.host, self.port)
-  client:propagate('error', self)
-  if not isEmpty(self.password) then
-    client:auth(self.password)  
-  end
-  self.client = client 
-end
-
-function RedisDataSource:fetch(context, callback, params)
-  self.client:info(function (err, data)
-    if err then
-      self:emit('error', err)
-    else
-      callback(data) 
-    end
-  end)
-end
 
 local parseLine = function (line)
   return split(line, ':')
@@ -64,7 +40,13 @@ local function parse(data)
   return result
 end
 
-local ds = RedisDataSource:new(params)
+--local ds = RedisDataSource:new(params)
+
+local ds = NetDataSource:new(params.host, params.port)
+function ds:onFetch(socket)
+  socket:write('INFO\r\n')
+end
+
 local plugin = Plugin:new(params, ds)
 function plugin:onParseValues(data)
   local parsed = parse(data) 
