@@ -19,7 +19,6 @@ local Accumulator = framework.Accumulator
 local NetDataSource = framework.NetDataSource
 local gsplit = framework.string.gsplit
 local split = framework.string.split
-local isEmpty = framework.string.isEmpty
 
 local params = framework.params
 params.port = params.port or 6379
