@@ -31,12 +31,16 @@ local parseLine = function (line)
 end
 
 local function parse(data)
+  if data:match('-NOAUTH Authentication required.\r\n') then
+    return nil, 'Authentication required. Please specify a password in plugin configuration.'
+  end
+  p(data)
   local result = {}
   for v in gsplit(data, '\r\n') do
     local parts = parseLine(v) 
     result[parts[1]] = parts[2]   
   end
-  return result
+  return true, result 
 end
 
 --local ds = RedisDataSource:new(params)
@@ -48,7 +52,11 @@ end
 
 local plugin = Plugin:new(params, ds)
 function plugin:onParseValues(data)
-  local parsed = parse(data) 
+  local success, parsed = parse(data) 
+  if not success then
+    self:emitEvent('error', parsed)
+    return
+  end
   local result = {}
   result['REDIS_CONNECTED_CLIENTS'] = parsed.connected_clients
   result['REDIS_KEY_HITS'] = acc:accumulate('REDIS_KEY_HITS', parsed.keyspace_hits)
