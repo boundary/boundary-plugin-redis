@@ -33,6 +33,8 @@ end
 local function parse(data)
   if data:match('-NOAUTH Authentication required.\r\n') then
     return nil, 'Authentication required. Please specify a password in plugin configuration.'
+  elseif data:match('-ERR invalid password.\r\n') then
+    return nil, 'Invalid password. Please check your password in plugin configuration.'
   end
   p(data)
   local result = {}
