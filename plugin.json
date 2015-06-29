@@ -1,8 +1,8 @@
 {
   "name" : "Boundary Redis Plugin",
-  "version" : "0.9.0",
+  "version" : "0.9.1",
   "meterVersionRequired" : "4.2.0-611",
-  "os" : [ "Linux" ], 
+  "unsupportedPlatforms" : [ ],
   "tags" : "redis", 
   "description": "Displays important REDIS metrics",
   "icon": "icon.png",
@@ -54,9 +54,9 @@
       "type": "password"
     },
     {
-      "title": "Poll Interval",
+      "title": "Poll Interval (ms)",
       "name": "pollInterval",
-      "description": "How often should the plugin poll for metrics",
+      "description": "How often (in milliseconds) should the plugin poll for metrics",
       "type" : "integer",
       "default" : 2000,
       "required" : false 

@@ -19,7 +19,7 @@ local Accumulator = framework.Accumulator
 local NetDataSource = framework.NetDataSource
 local gsplit = framework.string.gsplit
 local split = framework.string.split
-local isEmpty = framework.string.isEmpty
+local notEmpty = framework.string.notEmpty
 
 local params = framework.params
 params.port = params.port or 6379
@@ -31,25 +31,71 @@ local parseLine = function (line)
   return split(line, ':')
 end
 
+local function parseError(data)
+  local response, message = data:match('^-(%u+)%s(.*)\r\n')
+  if response == 'ERR' or response == 'NOAUTH' then
+    return message
+  end
+  return nil
+end
+
 local function parse(data)
+  local error = parseError(data)
+  if error then
+    return nil, error
+  end
+
   local result = {}
   for v in gsplit(data, '\r\n') do
     local parts = parseLine(v) 
     result[parts[1]] = parts[2]   
   end
-  return result
+  return true, result 
 end
 
---local ds = RedisDataSource:new(params)
+local RedisDataSource = NetDataSource:extend()
 
-local ds = NetDataSource:new(params.host, params.port)
+function RedisDataSource:initialize(params)
+  self.password = notEmpty(params.password)
+  NetDataSource.initialize(self, params.host, params.port)
+end
+
+function RedisDataSource:fetch(context, callback)
+  if notEmpty(self.password) and not self.authenticated then
+    local function parseAuth(data)
+      if data:match('+OK\r\n') then
+        self.authenticated = true
+        NetDataSource.fetch(self, context, callback)
+      else
+        local error = parseError(data)
+        if error then
+          self:emit('error', error) 
+        end
+      end
+    end
+    NetDataSource.fetch(self, context, parseAuth)
+  else
+    NetDataSource.fetch(self, context, callback)
+  end
+end
+
+local ds = RedisDataSource:new(params)
+
 function ds:onFetch(socket)
-  socket:write('INFO\r\n')
+  if notEmpty(self.password) and not self.authenticated then
+    socket:write('AUTH ' .. self.password .. '\r\n')
+  else
+    socket:write('INFO\r\n')
+  end
 end
 
 local plugin = Plugin:new(params, ds)
 function plugin:onParseValues(data)
-  local parsed = parse(data) 
+  local success, parsed = parse(data) 
+  if not success then
+    self:emitEvent('error', parsed)
+    return
+  end
   local result = {}
   result['REDIS_CONNECTED_CLIENTS'] = parsed.connected_clients
   result['REDIS_KEY_HITS'] = acc:accumulate('REDIS_KEY_HITS', parsed.keyspace_hits)
