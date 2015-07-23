@@ -1,6 +1,6 @@
 {
   "name" : "Boundary Redis Plugin",
-  "version" : "0.9.1",
+  "version" : "0.9.2",
   "meterVersionRequired" : "4.2.0-611",
   "unsupportedPlatforms" : [ ],
   "tags" : "redis", 
@@ -45,7 +45,8 @@
       "title": "Host",
       "name": "host",
       "description": "The redis hostname.",
-      "type": "string"
+      "type": "string",
+      "default" : "localhost"
     },
     {
       "title": "Password",

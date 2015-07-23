@@ -22,8 +22,8 @@ local split = framework.string.split
 local notEmpty = framework.string.notEmpty
 
 local params = framework.params
-params.port = params.port or 6379
-params.host = params.host or 'localhost'
+params.port = notEmpty(params.port, 6379)
+params.host = notEmpty(params.host, 'localhost')
 
 local acc = Accumulator:new()
 
