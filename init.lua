@@ -23,7 +23,7 @@ local notEmpty = framework.string.notEmpty
 
 local params = framework.params
 params.port = notEmpty(params.port, 6379)
-params.host = notEmpty(params.host, 'localhost')
+params.host = notEmpty(params.host, '127.0.0.1')
 
 local acc = Accumulator:new()
 
@@ -98,12 +98,12 @@ function plugin:onParseValues(data)
   end
   local result = {}
   result['REDIS_CONNECTED_CLIENTS'] = parsed.connected_clients
-  result['REDIS_KEY_HITS'] = acc:accumulate('REDIS_KEY_HITS', parsed.keyspace_hits)
-  result['REDIS_KEY_MISSES'] = acc:accumulate('REDIS_KEY_MISSES', parsed.keyspace_misses)
-  result['REDIS_KEYS_EXPIRED'] = acc:accumulate('REDIS_KEYS_EXPIRED', parsed.expired_keys)
-  result['REDIS_KEY_EVICTIONS'] = acc:accumulate('REDIS_KEY_EVICTIONS', parsed.evicted_keys)
-  result['REDIS_COMMANDS_PROCESSED'] = acc:accumulate('REDIS_COMMANDS_PROCESSED', parsed.total_commands_processed)
-  result['REDIS_CONNECTIONS_RECEIVED'] = acc:accumulate('REDIS_CONNECTIONS_RECEIVED', parsed.total_connections_received)
+  result['REDIS_KEY_HITS'] = acc('REDIS_KEY_HITS', parsed.keyspace_hits)
+  result['REDIS_KEY_MISSES'] = acc('REDIS_KEY_MISSES', parsed.keyspace_misses)
+  result['REDIS_KEYS_EXPIRED'] = acc('REDIS_KEYS_EXPIRED', parsed.expired_keys)
+  result['REDIS_KEY_EVICTIONS'] = acc('REDIS_KEY_EVICTIONS', parsed.evicted_keys)
+  result['REDIS_COMMANDS_PROCESSED'] = acc('REDIS_COMMANDS_PROCESSED', parsed.total_commands_processed)
+  result['REDIS_CONNECTIONS_RECEIVED'] = acc('REDIS_CONNECTIONS_RECEIVED', parsed.total_connections_received)
   result['REDIS_USED_MEMORY'] = parsed.used_memory_rss / uv_native.getTotalMemory()
   return result
 end
