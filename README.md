@@ -38,15 +38,15 @@ None
 ### Metrics Collected
 
 |Metric Name               |Description|
-|:-------------------------|:----------|
-|Redis Connected Clients   |           |
-|Redis Key Hits            |           |
-|Redis Key Misses          |           |
-|Redis Keys Expired        |           |
-|Redis Key Evictions       |           |
-|Redis Connections Received|           |
-|Redis Commands Processed  |           |
-|Redis Used Memory         |           |
+|:-------------------------|:---------------------------------------------------------------|
+|Redis Connected Clients   |Number of client connections (excluding connections from slaves)|
+|Redis Key Hits            |Number of successful lookup of keys in the main dictionary      |
+|Redis Key Misses          |Number of failed lookup of keys in the main dictionary          |
+|Redis Keys Expired        |Total number of key expiration events                           |
+|Redis Key Evictions       |Number of evicted keys due to maxmemory limit                   |
+|Redis Connections Received|Total number of connections accepted by the server              |
+|Redis Commands Processed  |Total number of commands processed by the server                |
+|Redis Used Memory         |Percentage of server memory used for the Redis instance         |
 
 ### Dashboards
 
@@ -54,4 +54,4 @@ None
 
 ### References
 
-None
+See information on Redis `INFO` command [here](http://redis.io/commands/info)
