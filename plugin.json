@@ -46,7 +46,7 @@
       "name": "host",
       "description": "The redis hostname.",
       "type": "string",
-      "default" : "localhost"
+      "default" : "127.0.0.1"
     },
     {
       "title": "Password",
