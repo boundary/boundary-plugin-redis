@@ -2,7 +2,7 @@
   "REDIS_COMMANDS_PROCESSED": {
     "defaultAggregate": "SUM",
     "defaultResolutionMS": 1000,
-    "description": "",
+    "description": "Total number of commands processed by the server",
     "displayName": "Redis Commands Processed",
     "displayNameShort": "Redis Commands",
     "unit": "number"
@@ -10,7 +10,7 @@
   "REDIS_CONNECTED_CLIENTS": {
     "defaultAggregate": "MAX",
     "defaultResolutionMS": 1000,
-    "description": "",
+    "description": "Number of client connections (excluding connections from slaves)",
     "displayName": "Redis Connected Clients",
     "displayNameShort": "Redis Connections",
     "unit": "number"
@@ -18,7 +18,7 @@
   "REDIS_CONNECTIONS_RECEIVED": {
     "defaultAggregate": "SUM",
     "defaultResolutionMS": 1000,
-    "description": "",
+    "description": "Total number of connections accepted by the server",
     "displayName": "Redis Connections Received",
     "displayNameShort": "Redis Connections",
     "unit": "number"
@@ -26,7 +26,7 @@
   "REDIS_KEYS_EXPIRED": {
     "defaultAggregate": "SUM",
     "defaultResolutionMS": 1000,
-    "description": "",
+    "description": "Total number of key expiration events",
     "displayName": "Redis Keys Expired",
     "displayNameShort": "Redis Expired",
     "unit": "number"
@@ -34,7 +34,7 @@
   "REDIS_KEY_EVICTIONS": {
     "defaultAggregate": "SUM",
     "defaultResolutionMS": 1000,
-    "description": "",
+    "description": "Number of evicted keys due to maxmemory limit",
     "displayName": "Redis Key Evictions",
     "displayNameShort": "Redis Evictions",
     "unit": "number"
@@ -42,7 +42,7 @@
   "REDIS_KEY_HITS": {
     "defaultAggregate": "SUM",
     "defaultResolutionMS": 1000,
-    "description": "",
+    "description": "Number of successful lookup of keys in the main dictionary",
     "displayName": "Redis Key Hits",
     "displayNameShort": "Redis Hits",
     "unit": "number"
@@ -50,7 +50,7 @@
   "REDIS_KEY_MISSES": {
     "defaultAggregate": "SUM",
     "defaultResolutionMS": 1000,
-    "description": "",
+    "description": "Number of failed lookup of keys in the main dictionary",
     "displayName": "Redis Key Misses",
     "displayNameShort": "Redis Misses",
     "unit": "number"
@@ -58,7 +58,7 @@
   "REDIS_USED_MEMORY": {
     "defaultAggregate": "MAX",
     "defaultResolutionMS": 1000,
-    "description": "",
+    "description": "Percentage of server memory used for the Redis instance",
     "displayName": "Redis Used Memory",
     "displayNameShort": "Redis Memory",
     "unit": "percent"
