@@ -29,12 +29,6 @@
   ],
   "paramSchema": [
     {
-      "title": "Source",
-      "name": "source",
-      "description": "The source to display in the legend for the REDIS data.",
-      "type": "string"
-    },
-    {
       "title": "Port",
       "name": "port",
       "description": "The redis port.",
@@ -61,6 +55,12 @@
       "type" : "integer",
       "default" : 2000,
       "required" : false 
+    },
+    {
+      "title": "Source",
+      "name": "source",
+      "description": "The source to display in the legend for the REDIS data.",
+      "type": "string"
     }
   ]
 }
