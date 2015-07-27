@@ -29,24 +29,20 @@
   ],
   "paramSchema": [
     {
-      "title": "Source",
-      "name": "source",
-      "description": "The source to display in the legend for the REDIS data.",
-      "type": "string"
+      "title": "Host",
+      "name": "host",
+      "description": "The redis hostname.",
+      "type": "string",
+      "default" : "127.0.0.1",
+      "required" : true
     },
     {
       "title": "Port",
       "name": "port",
       "description": "The redis port.",
       "type": "integer",
-      "default": 6379
-    },
-    {
-      "title": "Host",
-      "name": "host",
-      "description": "The redis hostname.",
-      "type": "string",
-      "default" : "127.0.0.1"
+      "default": 6379,
+      "required" : true
     },
     {
       "title": "Password",
@@ -61,6 +57,12 @@
       "type" : "integer",
       "default" : 2000,
       "required" : false 
+    },
+    {
+      "title": "Source",
+      "name": "source",
+      "description": "The source to display in the legend for the REDIS data.",
+      "type": "string"
     }
   ]
 }
