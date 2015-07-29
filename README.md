@@ -8,6 +8,8 @@ Collects metrics from an instance of a Redis database.
 |:----------|:-----:|:-------:|:-------:|:----:|
 | Supported |   v   |         |         |      |
 
+This plugin is compatiable with Redis 2.6.X or later.
+
 #### For Boundary Meter v4.2 or later
 
 - To install new meter go to Settings->Installation or [see instructions](https://help.boundary.com/hc/en-us/sections/200634331-Installation).
