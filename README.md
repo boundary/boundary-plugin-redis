@@ -1,6 +1,6 @@
 # Boundary Redis Plugin
 
-Collects metrics from an instance of a Redis database.
+Collects metrics from one or more instances of Redis databases.
 
 ### Prerequisites
 
@@ -31,11 +31,11 @@ None
 
 |Field Name  |Description                                            |
 |:-----------|:------------------------------------------------------|
-|Source      |The source to display in the legend for the REDIS data.|
-|Port        |The redis port.                                        |
 |Host        |The redis hostname.                                    |
+|Port        |The redis port.                                        |
 |Password    |Password to the redis server.                          |
 |PollInterval|Interval (in milliseconds) to query the redis server.  |
+|Source      |The source to display in the legend for the REDIS data.|
 
 ### Metrics Collected
 
