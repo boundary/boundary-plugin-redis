@@ -17,15 +17,17 @@ local uv_native = require('uv_native')
 local Plugin = framework.Plugin
 local Accumulator = framework.Accumulator
 local NetDataSource = framework.NetDataSource
+local PollerCollection = framework.PollerCollection
+local DataSourcePoller = framework.DataSourcePoller
 local gsplit = framework.string.gsplit
 local split = framework.string.split
 local notEmpty = framework.string.notEmpty
-
+local ipack = framework.util.ipack
+local Cache = framework.Cache
 local params = framework.params
-params.port = notEmpty(params.port, 6379)
-params.host = notEmpty(params.host, '127.0.0.1')
+params.items = params.items or {}
 
-local acc = Accumulator:new()
+local cache = Cache:new(function () return Accumulator:new() end)
 
 local parseLine = function (line)
   return split(line, ':')
@@ -57,6 +59,7 @@ local RedisDataSource = NetDataSource:extend()
 
 function RedisDataSource:initialize(params)
   self.password = notEmpty(params.password)
+  self.source = params.source
   NetDataSource.initialize(self, params.host, params.port)
 end
 
@@ -79,9 +82,7 @@ function RedisDataSource:fetch(context, callback)
   end
 end
 
-local ds = RedisDataSource:new(params)
-
-function ds:onFetch(socket)
+function RedisDataSource:onFetch(socket)
   if notEmpty(self.password) and not self.authenticated then
     socket:write('AUTH ' .. self.password .. '\r\n')
   else
@@ -89,22 +90,49 @@ function ds:onFetch(socket)
   end
 end
 
-local plugin = Plugin:new(params, ds)
-function plugin:onParseValues(data)
+local function poller(item)
+  item.pollInterval = notEmpty(item.pollInterval, 100)
+  item.port = notEmpty(item.port, 6379)
+  item.host = notEmpty(item.host, '127.0.0.1')
+  item.source = notEmpty(item.source, '')
+  local ds = RedisDataSource:new(item)
+  local p = DataSourcePoller:new(item.pollInterval, ds)
+  return p 
+end
+
+local function createPollers(items)
+  local pollers = PollerCollection:new() 
+  for _, i in pairs(items) do
+    pollers:add(poller(i))
+  end
+  return pollers
+end
+
+local pollers = createPollers(params.items)
+
+local plugin = Plugin:new({pollInterval = 1000}, pollers)
+function plugin:onParseValues(data, extra)
   local success, parsed = parse(data) 
   if not success then
-    self:emitEvent('error', parsed)
+    self:emitEvent('error', parsed, self.source, extra.context.source)
     return
   end
   local result = {}
-  result['REDIS_CONNECTED_CLIENTS'] = parsed.connected_clients
-  result['REDIS_KEY_HITS'] = acc('REDIS_KEY_HITS', parsed.keyspace_hits)
-  result['REDIS_KEY_MISSES'] = acc('REDIS_KEY_MISSES', parsed.keyspace_misses)
-  result['REDIS_KEYS_EXPIRED'] = acc('REDIS_KEYS_EXPIRED', parsed.expired_keys)
-  result['REDIS_KEY_EVICTIONS'] = acc('REDIS_KEY_EVICTIONS', parsed.evicted_keys)
-  result['REDIS_COMMANDS_PROCESSED'] = acc('REDIS_COMMANDS_PROCESSED', parsed.total_commands_processed)
-  result['REDIS_CONNECTIONS_RECEIVED'] = acc('REDIS_CONNECTIONS_RECEIVED', parsed.total_connections_received)
-  result['REDIS_USED_MEMORY'] = parsed.used_memory_rss / uv_native.getTotalMemory()
+  local metric = function (...)
+   ipack(result, ...)
+  end
+  local acc = cache:get(extra.context.source)
+
+  --local source = self.source .. '.' .. extra.context.source 
+  local source = extra.context.source
+  metric('REDIS_CONNECTED_CLIENTS', parsed.connected_clients, nil, source)
+  metric('REDIS_KEY_HITS', acc('REDIS_KEY_HITS', parsed.keyspace_hits), nil, source)
+  metric('REDIS_KEY_MISSES', acc('REDIS_KEY_MISSES', parsed.keyspace_misses), nil, source)
+  metric('REDIS_KEYS_EXPIRED', acc('REDIS_KEYS_EXPIRED', parsed.expired_keys), nil, source)
+  metric('REDIS_KEY_EVICTIONS', acc('REDIS_KEY_EVICTIONS', parsed.evicted_keys), nil, source)
+  metric('REDIS_COMMANDS_PROCESSED', acc('REDIS_COMMANDS_PROCESSED', parsed.total_commands_processed), nil, source)
+  metric('REDIS_CONNECTIONS_RECEIVED', acc('REDIS_CONNECTIONS_RECEIVED', parsed.total_connections_received), nil, source)
+  metric('REDIS_USED_MEMORY', parsed.used_memory_rss / uv_native.getTotalMemory(), nil, source)
   return result
 end
 

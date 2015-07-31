@@ -1,6 +1,19 @@
 {
-  "host" : "localhost",
-  "port" : 6379,
-  "password" : "",
-  "pollInterval": 2000
+	"items" : [
+		{
+			"host" : "127.0.0.1",
+	  		"port" : 6379,
+	  		"password" : "",
+	  		"pollInterval": 2000,
+	  		"source" : "redis-default"
+		},
+		{
+			"host" : "127.0.0.1",
+	  		"port" : 6380,
+	  		"password" : "boundary123",
+	  		"pollInterval": 1000,
+	  		"source" : "redis-auth"
+		}
+	]
+  
 }
