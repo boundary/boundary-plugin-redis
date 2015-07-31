@@ -68,7 +68,8 @@
       "title": "Source",
       "name": "source",
       "description": "The source to display in the legend for the REDIS data.",
-      "type": "string"
+      "type": "string",
+      "required" : true
     }
   ]
 }
