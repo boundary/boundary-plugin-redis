@@ -1,6 +1,7 @@
 {
-  "host" : "localhost",
+  "host" : "127.0.0.1",
   "port" : 6379,
   "password" : "",
-  "pollInterval": 2000
+  "pollInterval": 2000,
+  "source" : "development-host"
 }
