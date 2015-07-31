@@ -1,6 +1,6 @@
 {
   "name" : "Boundary Redis Plugin",
-  "version" : "0.9.2",
+  "version" : "0.9.3",
   "meterVersionRequired" : "4.2.0-611",
   "unsupportedPlatforms" : [ ],
   "tags" : "redis", 
@@ -27,6 +27,12 @@
       "layout": "d-w=3&d-h=2&d-pad=5&d-bg=none&d-g-REDIS_CONNECTED_CLIENTS=0-0-1-1&d-g-REDIS_KEY_HITS=1-0-1-1-t&d-g-REDIS_KEY_MISSES=1-0-1-1-b&d-g-REDIS_COMMANDS_PROCESSED=2-0-1-1&d-g-REDIS_CONNECTIONS_RECEIVED=2-1-1-1&d-g-REDIS_KEYS_EXPIRED=1-1-1-1-t&d-g-REDIS_KEY_EVICTIONS=1-1-1-1-b&d-g-REDIS_USED_MEMORY=0-1-1-1"
     }
   ],
+  "paramArray": {
+    "itemTitle": [
+      "host","source"
+    ],
+    "schemaTitle": "Host"
+  },
   "paramSchema": [
     {
       "title": "Host",
