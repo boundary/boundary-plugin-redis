@@ -91,7 +91,7 @@ function RedisDataSource:onFetch(socket)
 end
 
 local function poller(item)
-  item.pollInterval = notEmpty(item.pollInterval, 100)
+  item.pollInterval = notEmpty(item.pollInterval, 1000)
   item.port = notEmpty(item.port, 6379)
   item.host = notEmpty(item.host, '127.0.0.1')
   item.source = notEmpty(item.source, '')
