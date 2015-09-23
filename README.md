@@ -8,7 +8,7 @@ Collects metrics from one or more instances of Redis databases.
 |:----------|:-----:|:-------:|:-------:|:----:|
 | Supported |   v   |         |         |      |
 
-This plugin is compatiable with Redis 2.6.X or later.
+This plugin is compatible with Redis 2.6.X or later.
 
 #### For Boundary Meter v4.2 or later
 
