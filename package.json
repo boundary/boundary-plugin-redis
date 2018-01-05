@@ -1,7 +1,7 @@
 {
 	"name": "redis.graphdat.plugin",
 	"version": "0.0.1",
-	"title": "Redis plugin for Graphat",
+	"title": "Redis plugin for Truesight Pulse Meter",
 	"main": "index.js",
 	"private": true,
 	"dependencies": {
